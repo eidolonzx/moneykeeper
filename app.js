@@ -1,8 +1,8 @@
-var budgetController = (function(){
+var budgetController = (function() {
 
 })();
 
-var UIController = (function(){
+var UIController = (function() {
 
   var DOMstrings = {
     inputType: '.add__type',
@@ -27,33 +27,44 @@ var UIController = (function(){
 
 })();
 
-var controller = (function(budgetCtrl, UICtrl){
+var controller = (function(budgetCtrl, UICtrl) {
 
-  var DOM = UIController.getDOMstrings();
+  var setupEventListeners = function() {
+    var DOM = UICtrl.getDOMstrings();
 
-  var ctrlAddItem = function() {
-    // 1. Получаем данные из поля ввода
-    var input = UIController.getInput();
-    console.log(input);
+    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
-    // 2. Добавляем объект в budget controller
-
-    // 3. Добавляем объект в UI
-
-    // 4. Пересчитываем бюджет
-
-    // 5. Отображаем итоговый бюджет в UI
-
-  };
-
-  // слушаем клик мышки
-  document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
-
-  // слушаем нажатие ENTER
-  document.addEventListener('keypress', function(event) {
-    if (event.keyCode === 13 || event.which === 13) {
-      ctrlAddItem();
+    document.addEventListener('keypress', function(event) {
+        if (event.keyCode === 13 || event.which === 13) {
+          ctrlAddItem();
+        }
+      });
     }
-  });
+
+    var ctrlAddItem = function() {
+      // 1. Получаем данные из поля ввода
+      var input = UICtrl.getInput();
+      console.log(input);
+
+      // 2. Добавляем объект в budget controller
+
+      // 3. Добавляем объект в UI
+
+      // 4. Пересчитываем бюджет
+
+      // 5. Отображаем итоговый бюджет в UI
+
+      // слушаем клик мышки
+
+    };
+
+    return {
+      init: function() {
+        console.log('Application is started');
+        setupEventListeners();
+      }
+    }
 
 })(budgetController, UIController);
+
+controller.init();
