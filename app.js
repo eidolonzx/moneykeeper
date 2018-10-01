@@ -1,5 +1,28 @@
 var budgetController = (function() {
 
+  var Expence = function(id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+  }
+
+  var Income = function(id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+  }
+
+  var data = {
+    allItems: {
+      exp: [],
+      inc: []
+    },
+    totals: {
+      exp: 0,
+      inc: 0
+    }
+  }
+
 })();
 
 var UIController = (function() {
@@ -44,7 +67,6 @@ var controller = (function(budgetCtrl, UICtrl) {
     var ctrlAddItem = function() {
       // 1. Получаем данные из поля ввода
       var input = UICtrl.getInput();
-      console.log(input);
 
       // 2. Добавляем объект в budget controller
 
