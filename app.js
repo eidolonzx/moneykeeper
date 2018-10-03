@@ -23,6 +23,36 @@ var budgetController = (function() {
     }
   }
 
+  return {
+    addItem: function(type, des, val) {
+      var newItem, ID;
+
+      // create new ID
+      console.log(data.allItems[type]);
+
+      if (data.allItems[type].length > 0) {
+        ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+      } else {
+        ID = 0;
+      }
+
+      // create new item
+      if (type === 'exp') {
+        newItem = new Expence(ID, des, val);
+      } else if (type === 'inc') {
+        newItem = new Income(ID, des, val);
+      }
+      // push it to data structure
+      data.allItems[type].push(newItem);
+      return newItem;
+
+    },
+
+    testing: function() {
+      console.log(data)
+    }
+  }
+
 })();
 
 var UIController = (function() {
@@ -58,34 +88,36 @@ var controller = (function(budgetCtrl, UICtrl) {
     document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
     document.addEventListener('keypress', function(event) {
-        if (event.keyCode === 13 || event.which === 13) {
-          ctrlAddItem();
-        }
-      });
-    }
-
-    var ctrlAddItem = function() {
-      // 1. Получаем данные из поля ввода
-      var input = UICtrl.getInput();
-
-      // 2. Добавляем объект в budget controller
-
-      // 3. Добавляем объект в UI
-
-      // 4. Пересчитываем бюджет
-
-      // 5. Отображаем итоговый бюджет в UI
-
-      // слушаем клик мышки
-
-    };
-
-    return {
-      init: function() {
-        console.log('Application is started');
-        setupEventListeners();
+      if (event.keyCode === 13 || event.which === 13) {
+        ctrlAddItem();
       }
+    });
+  }
+
+  var ctrlAddItem = function() {
+    var input, newItem;
+    // 1. Получаем данные из поля ввода
+    input = UICtrl.getInput();
+
+    // 2. Добавляем объект в budget controller
+    newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+
+    // 3. Добавляем объект в UI
+
+    // 4. Пересчитываем бюджет
+
+    // 5. Отображаем итоговый бюджет в UI
+
+    // слушаем клик мышки
+
+  };
+
+  return {
+    init: function() {
+      console.log('Application is started');
+      setupEventListeners();
     }
+  }
 
 })(budgetController, UIController);
 
