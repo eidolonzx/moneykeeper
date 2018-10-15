@@ -71,7 +71,7 @@ var UIController = (function() {
       return {
         type: document.querySelector(DOMstrings.inputType).value,
         description: document.querySelector(DOMstrings.inputDescription).value,
-        value: document.querySelector(DOMstrings.inputValue).value
+        value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
       };
     },
 
@@ -128,26 +128,33 @@ var controller = (function(budgetCtrl, UICtrl) {
     });
   }
 
+  var updateBudget = function () {
+    // 1. Пересчитываем бюджет
+
+    // 2. return the budget
+
+    // 3. Отображаем итоговый бюджет в UI
+
+  };
+
   var ctrlAddItem = function() {
     var input, newItem;
     // 1. Получаем данные из поля ввода
     input = UICtrl.getInput();
 
-    // 2. Добавляем объект в budget controller
-    newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+    if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
+      // 2. Добавляем объект в budget controller
+      newItem = budgetCtrl.addItem(input.type, input.description, input.value);
 
-    // 3. Добавляем объект в UI
-    UICtrl.addListItem(newItem, input.type);
+      // 3. Добавляем объект в UI
+      UICtrl.addListItem(newItem, input.type);
 
-    // 4. clear the fields
-    UICtrl.clearFields();
+      // 4. clear the fields
+      UICtrl.clearFields();
 
-    // 5. Пересчитываем бюджет
-
-    // 6. Отображаем итоговый бюджет в UI
-
-    // слушаем клик мышки
-
+      // 5. calculate and update budget
+      updateBudget();
+    }
   };
 
   return {
